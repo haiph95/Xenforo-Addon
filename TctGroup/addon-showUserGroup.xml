@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="showUserGroup" title="Truyện Của Tôi - Group" version_string="1.1" version_id="4" url="http://haipham.net" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="template_hook" execute_order="10" callback_class="HaiPham_TctGroup_Listener" callback_method="actionTemplate" active="1" hint="" description="Template to show group"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="showUserGroup" display_order="1" debug_only="0"/>
+    <option option_id="tctShowOptionGroup" edit_format="callback" data_type="array" can_backup="1">
+      <default_value>a:1:{i:0;s:2:"20";}</default_value>
+      <edit_format_params>HaiPham_TctGroup_Option::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="showUserGroup" display_order="1"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_0" version_id="1" version_string="1.0"><![CDATA[WelcomeSlide]]></phrase>
+    <phrase title="option_0_explain" version_id="1" version_string="1.0"><![CDATA[]]></phrase>
+    <phrase title="option_allowedTagsUserGroupTitle" version_id="3" version_string="1.1"><![CDATA[Allowed HTML Tags in User Group Title]]></phrase>
+    <phrase title="option_allowedTagsUserGroupTitle_explain" version_id="3" version_string="1.1"><![CDATA[Type here a comma separated list of HTML tags which your users are allowed to make use of in their custom user titles.]]></phrase>
+    <phrase title="option_group_showUserGroup" version_id="1" version_string="1.0"><![CDATA[Truyện Của Tôi - Group]]></phrase>
+    <phrase title="option_group_showUserGroup_description" version_id="1" version_string="1.0"><![CDATA[Select the Group to show]]></phrase>
+    <phrase title="option_tctShowOptionGroup" version_id="1" version_string="1.0"><![CDATA[Danh sách nhóm thành viên]]></phrase>
+    <phrase title="option_tctShowOptionGroup_explain" version_id="1" version_string="1.0"><![CDATA[Chọn nhóm thành viên để hiển thị ngoài member page]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="member_group" version_id="1" version_string="1.0"><![CDATA[<xen:require css="member_group.css" />
+<div class="userGroup">
+	<div class="section">
+		<h3 class="subHeading textWithCount">
+			<span class="text">{xen:phrase user_group}</span>
+		</h3>
+		<div class="primaryContent">
+			<ol>
+				
+			</ol>
+		</div>
+	</div>
+	
+</div>
+]]></template>
+    <template title="member_group.css" version_id="1" version_string="1.0"><![CDATA[.userGroup .primaryContent 
+{
+	border: 1px solid rgba(49, 102, 158, .2);
+	border-top: none;
+}]]></template>
+  </templates>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+  <brc_actions/>
+</addon>
