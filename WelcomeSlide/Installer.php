@@ -7,7 +7,7 @@ class HaiPham_WelcomeSlide_Installer
     {
         XenForo_Application::get('db')->query("
             CREATE TABLE IF NOT EXISTS xf_tct_slide (
-              id INT (10) NOT NULL AUTO_INCREMENT,
+              slide_id INT (10) NOT NULL AUTO_INCREMENT,
               images VARCHAR (254) NULL,
               links VARCHAR (254) NULL,
               is_show INT NOT NULL,

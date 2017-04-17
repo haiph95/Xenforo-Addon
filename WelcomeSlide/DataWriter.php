@@ -9,7 +9,7 @@ class HaiPham_WelcomeSlide_DataWriter extends XenForo_DataWriter
     {
         return array(
             'xf_tct_slide' => array(
-                'id'    => array(
+                'slide_id'    => array(
                     'type' => self::TYPE_UINT,
                     'autoIncrement' => true
                 ),
@@ -34,7 +34,7 @@ class HaiPham_WelcomeSlide_DataWriter extends XenForo_DataWriter
      */
     public function _getExistingData($data)
     {
-        if (!$id = $this->_getExistingPrimaryKey($data, 'id'))
+        if (!$id = $this->_getExistingPrimaryKey($data, 'slide_id'))
         {
             return false;
         }
@@ -49,7 +49,7 @@ class HaiPham_WelcomeSlide_DataWriter extends XenForo_DataWriter
      */
     public function _getUpdateCondition($tableName)
     {
-        return 'id = ' . $this->_db->quote($this->getExisting('id'));
+        return 'slide_id = ' . $this->_db->quote($this->getExisting('slide_id'));
     }
 
     /**

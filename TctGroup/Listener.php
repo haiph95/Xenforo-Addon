@@ -29,7 +29,7 @@ class HaiPham_TctGroup_Listener
             static $groupModel = null;
 
             if ($groupModel === null) {
-                $groupModel = XenForo_Model::create('Xenforo_Model_UserGroup');
+                $groupModel = XenForo_Model::create('XenForo_Model_UserGroup');
             }
 
 
@@ -45,7 +45,6 @@ class HaiPham_TctGroup_Listener
 
             $contents = $template->create('member_group', array(
                 'groups' => $groups,
-                'ahihi' => $groups,
             ))->render();
         }
 	}
