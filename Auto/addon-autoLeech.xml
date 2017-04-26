@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="autoLeech" title="Auto Leech Truyện" version_string="1.0.0" version_id="2" url="http://haipham.net" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="navigation_tabs" execute_order="10" callback_class="HaiPham_Auto_Listener" callback_method="tab" active="1" hint="" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="AutoLeech"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="AutoLeech" permission_id="list" permission_type="flag" default_value="unset" interface_group_id="AutoLeech" display_order="1"/>
+    </permissions>
+    <interface_groups>
+      <interface_group interface_group_id="AutoLeech" display_order="1"/>
+    </interface_groups>
+  </permissions>
+  <phrases>
+    <phrase title="auto_leech" version_id="1" version_string="1.0.0"><![CDATA[Auto Leech Truyện]]></phrase>
+    <phrase title="auto_leech_author" version_id="1" version_string="1.0.0"><![CDATA[Tác giả]]></phrase>
+    <phrase title="auto_leech_list" version_id="1" version_string="1.0.0"><![CDATA[Auto Leech]]></phrase>
+    <phrase title="auto_leech_listChap" version_id="1" version_string="1.0.0"><![CDATA[Danh sách chương leech thành công]]></phrase>
+    <phrase title="auto_leech_story" version_id="1" version_string="1.0.0"><![CDATA[Tên truyện]]></phrase>
+    <phrase title="auto_leech_thread" version_id="1" version_string="1.0.0"><![CDATA[Thread]]></phrase>
+    <phrase title="auto_leech_thread_help" version_id="2" version_string="1.0.0"><![CDATA[Đường dẫn của thread trong forum <br>
+<strong>VD:</strong>  http://truyencuatoi.com/threads/yeu-than-ky-_-phat-tieu-dich-oa-nguu.2097/ ]]></phrase>
+    <phrase title="auto_leech_url" version_id="1" version_string="1.0.0"><![CDATA[Địa chỉ]]></phrase>
+    <phrase title="auto_leech_url_help" version_id="1" version_string="1.0.0"><![CDATA[<strong>Lưu ý:</strong> Đường dẫn là đường dẫn của chap]]></phrase>
+    <phrase title="permission_AutoLeech_list" version_id="1" version_string="1.0.0"><![CDATA[Danh sách]]></phrase>
+    <phrase title="permission_group_AutoLeech" version_id="1" version_string="1.0.0"><![CDATA[Auto Leech Truyện]]></phrase>
+    <phrase title="permission_interface_AutoLeech" version_id="1" version_string="1.0.0"><![CDATA[Auto Leech Truyện]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="auto-leech" class="HaiPham_Auto_Route" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="auto_leech" version_id="1" version_string="1.0.0"><![CDATA[<xen:require css="auto_leech.css" />
+<xen:require js="js/haipham/auto.js" />
+<xen:title>{xen:phrase auto_leech_list}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link auto-leech}">{xen:phrase auto_leech_list}</xen:breadcrumb>
+</xen:navigation>
+
+<div class="auto-form">
+	<div class="ctrlOption ctrlUnit"><input type="button" id="toggle" value="Ẩn/Hiện" onclick="$('.info').toggle()" class="button primary" /></div>
+	<form method="post" action="{xen:link auto-leech/send}" class="xenForm AutoValidator formOverlay" id="FormAuto">
+		<div class="info">
+			<dl class="ctrlUnit">
+				<dt><label for="thread">{xen:phrase auto_leech_thread}</label></dt>
+				<dd>
+					<input type="text" required name="thread" value="{$input.thread}" class="textCtrl" id="thread" />
+					<p class="explain">{xen:phrase auto_leech_thread_help}</p>
+				</dd>
+			</dl>
+			<dl class="ctrlUnit">
+				<dt><label for="url">{xen:phrase auto_leech_url}</label></dt>
+				<dd>
+					<input type="text" name="url" value="{$input.url}" class="textCtrl" id="url" />
+					<p class="explain">{xen:phrase auto_leech_url_help}</p>
+				</dd>
+			</dl>
+			<xen:comment><dl class="ctrlUnit">
+				<dt><label for="author">{xen:phrase auto_leech_author}</label></dt>
+				<dd>
+					<input type="text" name="author" required  value="{$input.author}" class="textCtrl" id="author" />
+				</dd>
+			</dl>
+			<dl class="ctrlUnit">
+				<dt><label for="story">{xen:phrase auto_leech_story}</label></dt>
+				<dd>
+					<input type="text" required  name="story" value="{$input.story}" class="textCtrl" id="story" />
+				</dd>
+			</dl> </xen:comment>
+		</div>
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd>
+				<input type="submit" id="start" name="save" value="{xen:phrase save_changes}" accesskey="s" class="button primary" />
+				<input type="button" id="stop" name="stop" value="{xen:phrase stop_watching}" class="button primary" />
+			</dd>
+		</dl>
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+	</form>
+	
+	<div class="section LeechResutls">
+		<h2 class="subHeading">{xen:phrase auto_leech_listChap}</h2>
+		<div class="results"></div>
+	</div>
+</div>]]></template>
+    <template title="auto_leech.css" version_id="1" version_string="1.0.0"><![CDATA[.auto-form {
+	float:left;
+	width: 100%;
+}
+.auto-form label {
+	font-weight: bold;
+}
+.ctrlOption {
+	float:right;
+}
+
+.LeechResutls .results {
+	max-height: 400px;
+	overflow: auto;
+}]]></template>
+  </templates>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+  <brc_actions/>
+</addon>

@@ -9,6 +9,7 @@ class HaiPham_WelcomeSlide_Listener
      * @param $contents
      * @param array $hookParams
      * @param XenForo_Template_Abstract $template
+     * @return XenForo_Template_Abstract
      */
     public static function actionTemplate($hookName, &$contents, array $hookParams, XenForo_Template_Abstract $template)
     {
@@ -24,9 +25,10 @@ class HaiPham_WelcomeSlide_Listener
                 'slides' => $slides
             );
 
-//            var_dump($view);die;
 
-            $contents = $template->create('slide_header', $view)->render();
+
+
+            $contents .= $template->create('slide_header', $view);
 
         }
     }

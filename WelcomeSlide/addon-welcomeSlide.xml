@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="welcomeSlide" title="Header Slide" version_string="1.0.2" version_id="2" url="http://haipham.net/" install_callback_class="HaiPham_WelcomeSlide_Installer" install_callback_method="up" uninstall_callback_class="HaiPham_WelcomeSlide_Installer" uninstall_callback_method="down">
+  <admin_navigation>
+    <navigation navigation_id="HP_WelcomeSlide" parent_navigation_id="stylesAndTemplates" display_order="10" link="slide" admin_permission_id="" debug_only="0" hide_no_children="0"/>
+  </admin_navigation>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="HP_listSlide"><![CDATA[<xen:require css="HP_listSlide.css" />
+<xen:title>{xen:phrase hp_slide_title}</xen:title>
+<xen:navigation>
+    <xen:breadcrumb href="{xen:adminlink slide}">{xen:phrase hp_slide_title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:comment>
+<ul class="hp_slide">
+	<li>{xen:phrase hp_slide_actives}</li>
+	<li>{xen:phrase hp_slide_images}</li>
+	<li>{xen:phrase hp_slide_links}</li>
+</ul>
+{xen:helper dump, $slides}
+</xen:comment>
+<xen:topctrl>
+	<a href="{xen:adminlink slide/add}" class="button OverlayTrigger">+ {xen:phrase create_slide}</a>
+</xen:topctrl>
+<xen:if is="{$slides}">
+<div class="dataTableWrapper">
+	<table class="dataTable" style="min-width: 450px">
+	<tr class="dataRow">
+		<th>{xen:phrase hp_slide_actives}</th>
+		<th>{xen:phrase hp_slide_images}</th>
+		<th>{xen:phrase hp_slide_links}</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	<xen:foreach loop="$slides" value="$slide">
+	<tr class="dataRow">
+		<td> {xen:if $slide.is_show, '{xen:phrase active}', {xen:phrase inactive}} 
+			<!--<xen:checkboxunit label="">
+				<xen:option name="is_show[{$slide.slide_id}]" value="1" selected="{$slide.is_show}" class="toggler" />
+			</xen:checkboxunit>
+			
+			<input type="checkbox" name="is_show[{$slide.slide_id}]" {xen:checked '{$slide.slide_id}'} class="SubmitOnChange Toggler" />-->
+		</td>
+		<td>{$slide.images}</td>
+		<td>{$slide.links}</td>
+		<td class="dataOptions">
+			<!--
+			--><a href="{xen:adminlink slide/edit, $slide}" class="secondaryContent OverlayTrigger">{xen:phrase edit}</a>
+		</td>
+		<td class="delete"><a href="{xen:adminlink slide/delete, $slide}" class="OverlayTrigger" title="{xen:phrase delete}...">{xen:phrase delete}</a></td>
+	</tr>
+	</xen:foreach>
+	<tr>
+		<td colspan="5" class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count={xen:count $slides}', 'total={$total}'}</td>
+	</tr>
+	</table>
+</div>
+</xen:if>]]></template>
+    <template title="HP_listSlide.css"><![CDATA[.hp_slide { width:100%; max-width:100%; border-spacing: 0; border-collapse: collapse; font-weight:bold}
+.hp_slide th { vertical-align: bottom; border-bottom: 2px solid #ddd; padding: 0 8px}
+.hp_slide td { padding: 8px; line-height: 1.42857143; vertical-align: middle; border-top: 1px solid #ddd;}
+]]></template>
+    <template title="Hp_listSlide_delete"><![CDATA[<xen:title>{xen:phrase confirm_deletion_of_slide}: {$slide.images}</xen:title>
+<xen:h1>{xen:phrase confirm_deletion_of_slide}</xen:h1>
+<xen:comment>{xen:helper dump, $slide}</xen:comment>
+
+<xen:require css="public:delete_confirmation.css" />
+
+<xen:form action="{xen:adminlink slide/delete, $slide}" class="deleteConfirmForm formOverlay">
+	<p>{xen:phrase please_confirm_that_you_want_to_delete_following_slide}:</p>
+	<strong><a href="{xen:adminlink slide/edit, $slide}">{$slide.images}</a></strong>
+
+	<xen:submitunit save="{xen:phrase delete_slide}" />
+	<input type="hidden" name="_xfConfirm" value="1" />
+</xen:form>]]></template>
+    <template title="Hp_listSlide_edit"><![CDATA[<xen:title>{xen:if $slide.slide_id, '{xen:phrase edit_slide}', '{xen:phrase create_slide}'}</xen:title>
+
+
+<xen:form action="{xen:adminlink slide/save, $slide}" class="AutoValidator" data-redirect="yes">
+
+	<xen:textboxunit name="images" value="{$slide.images}" label="{xen:phrase hp_slide_images}:" maxlength="100" />
+	<xen:textboxunit name="links" value="{$slide.links}" label="{xen:phrase hp_slide_links}:" maxlength="100">
+		<xen:explain>{xen:phrase hp_slide_notes}</xen:explain>
+	</xen:textboxunit>
+	<xen:checkboxunit label="">
+		<xen:option name="is_show" value="1" selected="{$slide.is_show}" label="{xen:phrase is_show}" hint="{xen:phrase making_tag_permanent_prevents_it_from_being_removed}" />
+	</xen:checkboxunit>
+	
+	<xen:submitunit save="{xen:phrase save_slide}">
+		<xen:if is="{$slide.slide_id}">
+			<input type="button" value="{xen:phrase delete_slide}..." class="button OverlayTrigger"
+				data-href="{xen:adminlink slide/delete, $slide}" />
+		</xen:if>
+	</xen:submitunit>
+
+</xen:form>]]></template>
+  </admin_templates>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="template_hook" execute_order="10" callback_class="HaiPham_WelcomeSlide_Listener" callback_method="actionTemplate" active="1" hint="" description="Slide Header"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="active" global_cache="1" version_id="2" version_string="1.0.0"><![CDATA[Bật]]></phrase>
+    <phrase title="admin_navigation_HP_WelcomeSlide" version_id="1" version_string="1.0.0"><![CDATA[Header Slide]]></phrase>
+    <phrase title="confirm_deletion_of_slide" version_id="2" version_string="1.0.0"><![CDATA[Xác nhận xóa slide này]]></phrase>
+    <phrase title="create_slide" version_id="2" version_string="1.0.0"><![CDATA[Thêm mới]]></phrase>
+    <phrase title="delete_slide" version_id="2" version_string="1.0.0"><![CDATA[Xác nhận xóa]]></phrase>
+    <phrase title="edit_slide" version_id="2" version_string="1.0.0"><![CDATA[Sửa Slide]]></phrase>
+    <phrase title="hp_slide_actives" version_id="2" version_string="1.0.0"><![CDATA[Kích hoạt]]></phrase>
+    <phrase title="hp_slide_images" version_id="2" version_string="1.0.0"><![CDATA[Ảnh]]></phrase>
+    <phrase title="hp_slide_links" version_id="2" version_string="1.0.0"><![CDATA[Đường dẫn (nếu có)]]></phrase>
+    <phrase title="hp_slide_notes" version_id="2" version_string="1.0.0"><![CDATA[Đường dẫn trong forum]]></phrase>
+    <phrase title="hp_slide_title" version_id="2" version_string="1.0.0"><![CDATA[Header Slide]]></phrase>
+    <phrase title="inactive" global_cache="1" version_id="2" version_string="1.0.0"><![CDATA[Tắt]]></phrase>
+    <phrase title="is_show" version_id="2" version_string="1.0.0"><![CDATA[Kích hoạt]]></phrase>
+    <phrase title="please_confirm_that_you_want_to_delete_following_slide" version_id="2" version_string="1.0.0"><![CDATA[Vui lòng xác nhận xóa những mục này]]></phrase>
+    <phrase title="save_slide" version_id="2" version_string="1.0.0"><![CDATA[Lưu]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="admin">
+      <prefix original_prefix="slide" class="HaiPham_WelcomeSlide_AdminPrefix" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="slide_header" version_id="2" version_string="1.0.0"><![CDATA[<xen:require js="js/owlcarousel/owl.carousel.min.js" />
+<xen:require css="slide_header.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css" rel="stylesheet" type="text/css" />
+<xen:if is="{$slides}">
+<div id="slide" class="owl-carousel owl-theme">
+	<xen:foreach loop="$slides" value="$slide">
+		<div class="item">
+			<a href="{xen:if {$slide.links}, '{$slide.links}', 'javascript:;'}">
+				<img src="{$slide.images}" title="Chào mừng đến với Truyện Của Tôi" />
+			</a>
+		</div>
+	</xen:foreach>
+</div>
+</xen:if>
+<script type="text/javascript">
+	$('#slide').owlCarousel({
+		loop:true,
+		margin:10,
+		autoplay: true,
+		center: true,
+		autoWidth:true,
+	});
+</script>]]></template>
+    <template title="slide_header.css" version_id="2" version_string="1.0.0"><![CDATA[#slide {
+    border: 1px solid rgb(212,225,238);
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 0 0 5px 0;
+}
+#slide img {
+    max-height: 220px;
+}]]></template>
+  </templates>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+  <brc_actions/>
+</addon>

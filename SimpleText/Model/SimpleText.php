@@ -22,8 +22,8 @@ class HaiPham_SimpleText_Model_SimpleText extends XenForo_Model
      */
     public function getAllSimpleText()
     {
-        return $this->_getDb()->fetchAll(
-            "SELECT * FROM `xf_simple_text` ORDER BY `simple_date` DESC "
+        return $this->fetchAllKeyed(
+            "SELECT * FROM `xf_simple_text` ORDER BY `simple_date` DESC ", 'simple_id'
         );
     }
 }

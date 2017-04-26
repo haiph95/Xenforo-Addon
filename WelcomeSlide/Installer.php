@@ -11,7 +11,7 @@ class HaiPham_WelcomeSlide_Installer
               images VARCHAR (254) NULL,
               links VARCHAR (254) NULL,
               is_show INT NOT NULL,
-              PRIMARY KEY (id)
+              PRIMARY KEY (slide_id)
             )
         ");
     }
