@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="showUserGroup" title="Truyện Của Tôi - Group" version_string="1.1" version_id="4" url="http://haipham.net" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
-  <admin_navigation/>
+<addon addon_id="showUserGroup" title="Truyện Của Tôi - Group" version_string="1.1.1" version_id="5" url="http://haipham.net" install_callback_class="HaiPham_TctGroup_Installer" install_callback_method="up" uninstall_callback_class="HaiPham_TctGroup_Installer" uninstall_callback_method="down">
+  <admin_navigation>
+    <navigation navigation_id="userGroupLevel" parent_navigation_id="userGroups" display_order="10" link="user-group-level" admin_permission_id="userGroup" debug_only="0" hide_no_children="0"/>
+  </admin_navigation>
   <admin_permissions/>
   <admin_style_properties/>
-  <admin_templates/>
+  <admin_templates>
+    <template title="user_group_level"><![CDATA[<xen:require css="user_group_level.css" />
+<xen:topctrl>
+	<a href="{xen:adminlink slide/add}" class="button OverlayTrigger">+ {xen:phrase create_slide}</a>
+</xen:topctrl>]]></template>
+    <template title="user_group_level.css"><![CDATA[]]></template>
+  </admin_templates>
   <admin_template_modifications/>
   <code_events/>
   <code_event_listeners>
@@ -27,6 +35,7 @@
     <interface_groups/>
   </permissions>
   <phrases>
+    <phrase title="admin_navigation_userGroupLevel" version_id="5" version_string="1.1.1"><![CDATA[User Group Level]]></phrase>
     <phrase title="option_0" version_id="1" version_string="1.0"><![CDATA[WelcomeSlide]]></phrase>
     <phrase title="option_0_explain" version_id="1" version_string="1.0"><![CDATA[]]></phrase>
     <phrase title="option_allowedTagsUserGroupTitle" version_id="3" version_string="1.1"><![CDATA[Allowed HTML Tags in User Group Title]]></phrase>
@@ -36,7 +45,11 @@
     <phrase title="option_tctShowOptionGroup" version_id="1" version_string="1.0"><![CDATA[Danh sách nhóm thành viên]]></phrase>
     <phrase title="option_tctShowOptionGroup_explain" version_id="1" version_string="1.0"><![CDATA[Chọn nhóm thành viên để hiển thị ngoài member page]]></phrase>
   </phrases>
-  <route_prefixes/>
+  <route_prefixes>
+    <route_type type="admin">
+      <prefix original_prefix="user-group-level" class="HaiPham_TctGroup_Prefix_Admin" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
   <style_properties/>
   <templates>
     <template title="member_group" version_id="1" version_string="1.0"><![CDATA[<xen:require css="member_group.css" />

@@ -35,13 +35,8 @@ class HaiPham_TctGroup_GetUserGroup extends XenForo_Model
             SELECT user_group_id, title, username_css, user_title
             FROM xf_user_group
             WHERE user_group_id = 2 OR user_group_id > 4
-            ORDER BY user_group_id
+            ORDER BY user_group_id ASC
         ');
 
-    }
-
-    public static function getUserGroupByID()
-    {
-        //
     }
 }

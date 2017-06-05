@@ -8,8 +8,7 @@ class HaiPham_Auto_Helper
 {
     public static function html2BBCode($string)
     {
-        $replace = strip_tags($string, '<br><i><b><font><img><u>');
-        $replace = str_replace("*Chương này có nội dung ảnh, nếu bạn không thấy nội dung chương, vui lòng bật chế độ hiện hình ảnh của trình duyệt để đọc.", '', $replace);
+        $replace = strip_tags($string, '<br><i><b><font><img><u><p>');
         $replace = preg_replace('/\<br( \/)?\>/',"\n",$replace);
         $replace = preg_replace("/<img src=\"(http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\"( alt=\"\".+)?\/?>/", "[img]$1[/img]", $replace);
         $replace = preg_replace("/<img alt=\"\" src=\"(http:\/\/[^\s'\"<>]+(\.gif|\.jpg|\.png))\"\/?>/", "[img]$1[/img]", $replace);
@@ -17,6 +16,8 @@ class HaiPham_Auto_Helper
         $replace = preg_replace('/\<font color=\"(#[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9])\"\>((\s|.)+?)\<\/font>/i', '[color=\\1]\\2[/color]', $replace);
         $replace = preg_replace('/\<font color=\"([a-zA-Z]+)\]((\s|.)+?)\<\/font>/i', '[color=\\1]\\2[/color]', $replace);
 //        $replace = preg_replace("/\<a href=\"((http|ftp|https|ftps|irc):\/\/[^<>\s]+?)\">((\s|.)+?)\<\/a\>/i","[url=\\1]\\3[/url]", $replace);
+        $replace = str_replace('<p>', '', $replace);
+        $replace = str_replace('</p>', "\n", $replace);
         $replace = str_replace('<i>','[i]',$replace);
         $replace = str_replace('</i>','[/i]',$replace);
         $replace = str_replace('<b>','[b]',$replace);
@@ -54,6 +55,8 @@ class HaiPham_Auto_Helper
     public static function delTrash($text)
     {
         $text = preg_replace('/xem thêm tại (.+)/', '', $text);
+
+        $text = str_replace("*Chương này có nội dung ảnh, nếu bạn không thấy nội dung chương, vui lòng bật chế độ hiện hình ảnh của trình duyệt để đọc.", '', $text);
 
         $text = preg_replace('/Bạn đang xem (.+)/', '', $text);
 

@@ -20,7 +20,7 @@ class HaiPham_TctGroup_Model_GroupLevel extends XenForo_Model
     public function getAllLevel()
     {
         return $this->fetchAllKeyed(
-            "SELECT * FROM xf_group_level WHERE", 'level_id'
+            "SELECT * FROM xf_group_level", 'level_id'
         );
     }
 }

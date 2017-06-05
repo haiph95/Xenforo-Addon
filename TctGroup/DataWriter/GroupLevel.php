@@ -13,6 +13,7 @@ class HaiPham_TctGroup_DataWriter_GroupLevel extends XenForo_DataWriter
                 'level_id' => ['type' => self::TYPE_UINT, 'autoIncrement' => true],
                 'level_name' => ['type' => self::TYPE_STRING, 'require' => true],
                 'level_css' => ['type' => self::TYPE_STRING],
+                'level_parent' => ['type'=> self::TYPE_INT, 'require' => true],
                 'create_at' => ['type' => self::TYPE_INT, 'require' => false, 'default' => XenForo_Application::$time]
             ]
         ];

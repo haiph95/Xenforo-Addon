@@ -5,8 +5,10 @@ class HaiPham_Auto_Controller extends XenForo_ControllerPublic_Abstract
 {
     public function actionIndex()
     {
+        if (!XenForo_Visitor::getInstance()['permissions']['AutoLeech']['list']) {
+            throw $this->getNoPermissionResponseException();
+        }
         return $this->responseView('HaiPham_Auto_ViewPublic', 'auto_leech');
-//        return $this->responseRedirect('HaiPham_Auto_ViewPublic', 'send');
     }
 
     public function actionSend()
@@ -59,6 +61,10 @@ class HaiPham_Auto_Controller extends XenForo_ControllerPublic_Abstract
 
     }
 
+    protected function _getAutoModel()
+    {
+        $this->getModelFromCache('HaiPham_Auto_Model');
+    }
 
 
     protected function _getModelThread()

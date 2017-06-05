@@ -35,29 +35,50 @@ class HaiPham_Auto_Chap
     {
         $this->html = HaiPham_Auto_Helper::connect()->request('get', $url);
         switch (parse_url($url, PHP_URL_HOST)) :
-            case 'truyenfull.vn';
+            case 'truyenfull.vn' :
                 $this->TFV();
                 break;
-            case 'bachngocsach.com';
+            case 'bachngocsach.com' :
                 $this->BNS();
                 break;
-            case 'webtruyen.com';
+            case 'webtruyen.com' :
                 $this->WET();
                 break;
-            case 'thichdoctruyen.com';
+            case 'thichdoctruyen.com' :
                 $this->TDT();
                 break;
-            default;
+            case 'app.truyenyy.com' :
+                $this->ATY();
+                break;
+            default :
                 return;
                 break;
         endswitch;
     }
 
+    /** App truyện yy */
+    private function ATY()
+    {
+        $this->title = $this->html->filter('.chap-title')->text();
+        $this->content = $this->html->filter('#inner_chap_content')->text();
+
+        var_dump($this->content);die;
+        try {
+            $this->next_url = 'http://app.truyenyy.com' . $this->html->filter('.chapter .btns .weui_btn_primary')->attr('href');
+        } catch (Exception $exception)
+        {
+            $this->next_url = '';
+        }
+        return $this->setMessages();
+    }
+
+    /** Thích đọc truyện */
     private function TDT()
     {
 
     }
 
+    /** Webtruyen */
     private function WET()
     {
         $this->title = $this->html->filter('.chapter-header h3')->text();
@@ -71,6 +92,7 @@ class HaiPham_Auto_Chap
         return $this->setMessages();
     }
 
+    /** Bạch ngọc sách */
     private function BNS()
     {
         //$this->title = $this->html->filter('#chuong-title')->text();
@@ -79,7 +101,7 @@ class HaiPham_Auto_Chap
         var_dump($this->html);die;
     }
 
-
+    /** truyện full */
     private function TFV()
     {
         $this->title = $this->html->filter('.chapter-title')->text();
